@@ -59,25 +59,31 @@ $query->execute(array(
             <Editor
                 className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
                 onInput={(value) => {
-                    let query = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)\1/is)?.groups?.query || "";
-
+                    let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);
+                    let query = "";
+                    let quote = "'";
                     let variables: Variables = {};
-                    let match: ReturnType<typeof value.match>;
-                    do {
-                        match = value.match(/('|"):(?<name>.+?)\1 => ('|"|)(?<value>.+?)[\3\W]/);
+                    if (match) {
+                        query = match?.groups?.query || "";
+                        quote = match[1];
 
-                        if (match && match.groups) {
-                            variables[match.groups.name] = match.groups.value;
-                            value = value.replace(match[0], "");
-                        }
-                    } while (match);
+                        do {
+                            match = value.match(/('|"):(?<name>.+?)\1 => ('|"|)(?<value>.+?)[\3\W]/);
 
-                    Object.keys(variables).forEach((name) => {
-                        query = query.replace(`:${name}`, `@${name}`);
-                    });
+                            if (match && match.groups) {
+                                variables[match.groups.name] = match.groups.value;
+                                value = value.replace(match[0], "");
+                            }
+                        } while (match);
+
+                        Object.keys(variables).forEach((name) => {
+                            query = query.replace(`:${name}`, `@${name}`);
+                        });
+                    }
 
                     setQuery(
                         query
+                            .replace(new RegExp(`\\\\${quote}`, "g"), quote)
                             .split("\n")
                             .map((line) => line.replace(/^(\t|\s{0,4})/, ""))
                             .join("\n")
