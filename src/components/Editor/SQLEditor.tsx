@@ -6,6 +6,7 @@ import { QuoteStyle } from "../Inputs/QuoteStyle";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
+import { twMerge } from "tailwind-merge";
 
 export function SQLEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -32,7 +33,7 @@ export function SQLEditor() {
 
             $details = (
                 <>
-                    <div className="bg-red-600/20 p-4 border-4 border-red-600/20 mt-4">
+                    <div className="bg-red-500/20 py-4 mt-4 rounded-t-xl box-content">
                         <pre>
                             <span className="opacity-50">{line.substring(0, Number(column) - 1)}</span>
                             <b>{line.substring(Number(column) - 1)}</b>
@@ -43,8 +44,9 @@ export function SQLEditor() {
         }
 
         return (
-            <div className="p-4 bg-red-500/20 border-4 border-red-500/20 rounded-xl mb-4">
-                {error}
+            <div className="p-4 pb-0 bg-red-500/20 border-4 border-red-500/20 rounded-t-xl">
+                <b className="mr-2">{error.substring(0, error.indexOf(":") + 1)}</b>
+                {error.substring(error.indexOf(":") + 1).trim()}
                 {$details}
             </div>
         );
@@ -122,7 +124,7 @@ ${value}`;
             <Editor
                 aria-label="SQL Editor"
                 textarea={textarea}
-                className="bg-white/10 border-white/20 focus:border-white/40"
+                className={twMerge("bg-white/10 border-white/20 focus:border-white/40", $error ? "rounded-t-none" : "")}
                 value={sql}
                 setValue={setSQL}
                 onInput={(value) => {
