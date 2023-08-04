@@ -96,6 +96,7 @@ export function Editor(props: EditorProps) {
 
     return (
         <textarea
+            spellCheck={false}
             ref={props.textarea}
             className={twMerge(
                 "w-full h-full min-h-[16ch] outline-none rounded-xl p-4 border-4 resize-none whitespace-pre",
