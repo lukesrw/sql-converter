@@ -92,7 +92,8 @@ query.run({
                 value={js}
                 setValue={setJS}
                 onInput={(value) => {
-                    let query = value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+)\1/is)?.groups?.query || "";
+                    let query =
+                        value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+?)(?<!\\)\1/is)?.groups?.query || "";
 
                     let variables: Variables = {};
                     let match: ReturnType<typeof value.match>;

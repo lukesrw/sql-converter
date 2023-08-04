@@ -59,7 +59,7 @@ $query->execute(array(
             <Editor
                 className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
                 onInput={(value) => {
-                    let query = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)\1/is)?.groups?.query || "";
+                    let query = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is)?.groups?.query || "";
 
                     let variables: Variables = {};
                     let match: ReturnType<typeof value.match>;
