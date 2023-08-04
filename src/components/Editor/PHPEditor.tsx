@@ -57,6 +57,7 @@ $query->execute(array(
                 <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
             </Options>
             <Editor
+                aria-label="PHP Editor"
                 className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
                 onInput={(value) => {
                     let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);

@@ -120,6 +120,7 @@ ${value}`;
             </Options>
             {$error}
             <Editor
+                aria-label="SQL Editor"
                 textarea={textarea}
                 className="bg-white/10 border-white/20 focus:border-white/40"
                 value={sql}
