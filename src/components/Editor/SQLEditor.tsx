@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { format } from "sql-formatter";
 import { Editor } from "../Editor";
 import { Input } from "../Input";
@@ -12,6 +12,43 @@ export function SQLEditor() {
 
     const [sql, setSQL] = useState("");
     const [quote, setQuote] = useState("'");
+    const [error, setError] = useState("");
+
+    /**
+     * Parse the sql-formatter error for end user
+     */
+    const $error = useMemo(() => {
+        if (!error) return null;
+
+        let $details: ReactNode = null;
+
+        /**
+         * Attempt to extract specific line & column error to highlight for user
+         */
+        let match = error.match(/line (?<line>\d+) column (?<column>\d+)/i);
+        if (match && match.groups) {
+            let { line, column } = match.groups;
+            line = query.split("\n")[Number(line) - 1];
+
+            $details = (
+                <>
+                    <div className="bg-red-600/20 p-4 border-4 border-red-600/20 mt-4">
+                        <pre>
+                            <span className="opacity-50">{line.substring(0, Number(column) - 1)}</span>
+                            <b>{line.substring(Number(column) - 1)}</b>
+                        </pre>
+                    </div>
+                </>
+            );
+        }
+
+        return (
+            <div className="p-4 bg-red-500/20 border-4 border-red-500/20 rounded-xl mb-4">
+                {error}
+                {$details}
+            </div>
+        );
+    }, [error]);
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -37,6 +74,13 @@ ${value}`;
         setSQL(value);
     }, [query, variables, quote]);
 
+    /**
+     * Automatically hide formatting error if query/variables update
+     */
+    useEffect(() => {
+        setError("");
+    }, [query, variables]);
+
     return (
         <>
             <Options>
@@ -47,18 +91,26 @@ ${value}`;
                         style={{
                             lineHeight: "normal"
                         }}
-                        onClick={(event) => {
+                        onClick={() => {
                             setQuery((query) => {
-                                return format(query, {
-                                    language: "mysql",
-                                    tabWidth: 4,
-                                    logicalOperatorNewline: "after",
-                                    denseOperators: false,
-                                    keywordCase: "upper",
-                                    linesBetweenQueries: 1,
-                                    indentStyle: "standard",
-                                    expressionWidth: 500
-                                });
+                                try {
+                                    return format(query, {
+                                        language: "mysql",
+                                        tabWidth: 4,
+                                        logicalOperatorNewline: "after",
+                                        denseOperators: false,
+                                        keywordCase: "upper",
+                                        linesBetweenQueries: 1,
+                                        indentStyle: "standard",
+                                        expressionWidth: 500
+                                    });
+                                } catch (error) {
+                                    if (error instanceof Error) {
+                                        setError(error.message);
+                                    }
+
+                                    return query;
+                                }
                             });
                         }}
                     >
@@ -66,6 +118,7 @@ ${value}`;
                     </button>
                 </Input>
             </Options>
+            {$error}
             <Editor
                 textarea={textarea}
                 className="bg-white/10 border-white/20 focus:border-white/40"
