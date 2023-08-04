@@ -88,6 +88,7 @@ query.run({
                 <NPMLibrary library={library} setLibrary={setLibrary}></NPMLibrary>
             </Options>
             <Editor
+                aria-label="JS Editor"
                 className="bg-yellow-500/20 border-yellow-500/20 focus:border-yellow-500/40"
                 value={js}
                 setValue={setJS}

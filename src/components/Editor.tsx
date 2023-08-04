@@ -1,10 +1,16 @@
-import { Dispatch, RefObject, SetStateAction, useContext, useEffect, useState } from "react";
+import {
+    DetailedHTMLProps,
+    Dispatch,
+    RefObject,
+    SetStateAction,
+    TextareaHTMLAttributes,
+    useEffect,
+    useState
+} from "react";
 import { twMerge } from "tailwind-merge";
-import { QueryContext } from "./QueryContext";
 
-export interface EditorProps {
+export interface EditorProps extends Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label" | "className"> {
     textarea: RefObject<HTMLTextAreaElement>;
-    className: string;
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
     onInput: (value: string) => void;
@@ -96,6 +102,7 @@ export function Editor(props: EditorProps) {
 
     return (
         <textarea
+            aria-label={props["aria-label"]}
             spellCheck={false}
             ref={props.textarea}
             className={twMerge(
