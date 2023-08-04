@@ -33,7 +33,12 @@ export function SQLEditor() {
 
             $details = (
                 <>
-                    <div className="bg-red-500/20 py-4 mt-4 rounded-t-xl box-content">
+                    <div
+                        className="bg-red-500/20 py-4 mt-4 rounded-t-xl box-content overflow-auto"
+                        style={{
+                            scrollbarWidth: "thin"
+                        }}
+                    >
                         <pre>
                             <span className="opacity-50">{line.substring(0, Number(column) - 1)}</span>
                             <b>{line.substring(Number(column) - 1)}</b>
