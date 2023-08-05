@@ -133,7 +133,7 @@ ${value}`;
                     let valueVariables: Variables = {};
                     let match: ReturnType<typeof value.match>;
                     do {
-                        match = value.match(/set\s*@(?<name>\w+)\s*=\s*('|"|)(?<value>\w+)\2;/i);
+                        match = value.match(/set\s*@(?<name>\w+)\s*=\s*('|"|)(?<value>.+?)(?<!\\)\2;/i);
 
                         if (match && match.groups) {
                             valueVariables[match.groups.name] = match.groups.value;
