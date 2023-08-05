@@ -137,6 +137,9 @@ export function Editor(props: EditorProps) {
 
                 props.onInput(event.currentTarget.value);
             }}
+            onBlur={(event) => {
+                props.onInput(event.currentTarget.value);
+            }}
         ></textarea>
     );
 }
