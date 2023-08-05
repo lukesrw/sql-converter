@@ -1,10 +1,10 @@
-import { PropsWithChildren, ReactNode } from "react";
+import { PropsWithChildren } from "react";
 
-export interface InputProps extends PropsWithChildren {
+export interface LabelProps extends PropsWithChildren {
     label: string;
 }
 
-export function Input(props: InputProps) {
+export function Label(props: LabelProps) {
     return (
         <label className="text-sm font-semibold mb-4 block">
             {props.label}

@@ -1,23 +1,26 @@
 import { Dispatch, SetStateAction } from "react";
-import { Input } from "../Input";
-import { Select } from "../Select";
+import { Label } from "../Label";
+import { Select } from "../Inputs/Select";
+import { INPUT_VARIANTS } from "../Inputs/Variants";
 
 export interface QuoteStyleProps {
+    variant?: keyof typeof INPUT_VARIANTS;
     quote: string;
     setQuote: Dispatch<SetStateAction<string>>;
 }
 
 export function QuoteStyle(props: QuoteStyleProps) {
     return (
-        <Input label="Quote Style">
+        <Label label="Quote Style">
             <Select
+                variant={props.variant}
                 value={props.quote}
                 setValue={props.setQuote}
                 options={{
                     "'": "Single Quote (')",
-                    '"': 'Double Quote (")',
+                    '"': 'Double Quote (")'
                 }}
             ></Select>
-        </Input>
+        </Label>
     );
 }

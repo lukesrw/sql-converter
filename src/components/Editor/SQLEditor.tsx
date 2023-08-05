@@ -1,12 +1,13 @@
 import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { format } from "sql-formatter";
-import { Editor } from "../Editor";
-import { Input } from "../Input";
-import { QuoteStyle } from "../Inputs/QuoteStyle";
+import { Editor } from "../Inputs/Editor";
+import { Label } from "../Label";
+import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Options } from "../Options";
-import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
 import { twMerge } from "tailwind-merge";
+import { Button } from "../Button";
+import { QueryContext, Variables } from "../QueryContext";
 
 export function SQLEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -92,12 +93,8 @@ ${value}`;
         <>
             <Options>
                 <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
-                <Input label="Format">
-                    <button
-                        className="flex p-4 py-3 justify-center items-center bg-white/10 hover:bg-white/20 disabled:hover:bg-white/10 active:bg-white/40 border-4 border-white/20 hover:border-white/40 active:border-white/80 disabled:hover:border-white/20 disabled:opacity-50 rounded-xl mt-2 font-bold"
-                        style={{
-                            lineHeight: "normal"
-                        }}
+                <Label label="Format">
+                    <Button
                         onClick={() => {
                             setQuery((query) => {
                                 try {
@@ -122,8 +119,8 @@ ${value}`;
                         }}
                     >
                         Auto
-                    </button>
-                </Input>
+                    </Button>
+                </Label>
             </Options>
             {$error}
             <Editor

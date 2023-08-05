@@ -1,16 +1,19 @@
 import { Dispatch, SetStateAction } from "react";
-import { Input } from "../Input";
-import { Select } from "../Select";
+import { Label } from "../Label";
+import { Select } from "../Inputs/Select";
+import { INPUT_VARIANTS } from "../Inputs/Variants";
 
 export interface NPMLibraryProps {
+    variant: keyof typeof INPUT_VARIANTS;
     library: string;
     setLibrary: Dispatch<SetStateAction<string>>;
 }
 
 export function NPMLibrary(props: NPMLibraryProps) {
     return (
-        <Input label="NPM Library">
+        <Label label="NPM Library">
             <Select
+                variant={props.variant}
                 options={{
                     mysql: "mysql2",
                     sqlite: "better-sqlite3"
@@ -18,6 +21,6 @@ export function NPMLibrary(props: NPMLibraryProps) {
                 setValue={props.setLibrary}
                 value={props.library}
             ></Select>
-        </Input>
+        </Label>
     );
 }

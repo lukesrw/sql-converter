@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction } from "react";
+import { twMerge } from "tailwind-merge";
+import { INPUT_VARIANTS } from "./Variants";
 
 export interface SelectProps {
+    variant?: keyof typeof INPUT_VARIANTS;
     value: string;
     setValue: Dispatch<SetStateAction<string>>;
     options: Record<string, string>;
@@ -9,7 +12,7 @@ export interface SelectProps {
 export function Select(props: SelectProps) {
     return (
         <select
-            className="bg-white/10 p-4 py-3 block mt-2 rounded-xl font-normal border-4 border-white/20 focus:border-white/40"
+            className={twMerge(INPUT_VARIANTS[props.variant || "base"])}
             value={props.value}
             onChange={(event) => props.setValue(event.currentTarget.value)}
         >

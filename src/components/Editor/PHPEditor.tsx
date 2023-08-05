@@ -1,15 +1,23 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { Editor } from "../Editor";
-import { QuoteStyle } from "../Inputs/QuoteStyle";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "../Button";
+import { QuoteStyle } from "../Controls/QuoteStyle";
+import { Editor } from "../Inputs/Editor";
+import { TextInput } from "../Inputs/TextInput";
+import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
+import { Rename, RenameButton } from "../Controls/Rename";
 
 export function PHPEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
 
     const [php, setPHP] = useState("");
     const [quote, setQuote] = useState("'");
+
+    const [rename, setRename] = useState(false);
+    const [queryName, setQueryName] = useState("$query");
+    const [databaseName, setDatabaseName] = useState("$Database");
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -32,14 +40,14 @@ export function PHPEditor() {
             value = value.replace(`@${name}`, `:${name}`);
         });
 
-        value = `$query = $Database->${names.length ? "prepare" : "query"}(
+        value = `${queryName} = ${databaseName}->${names.length ? "prepare" : "query"}(
     ${escapeWrap(value, quote)}
 );`;
 
         if (names.length) {
             value += `
 
-$query->execute(array(
+${queryName}->execute(array(
     ${names
         .map((name) => {
             return `${escapeWrap(":" + name, quote)} => ${escapeWrap(variables[name], quote)}`;
@@ -49,16 +57,25 @@ $query->execute(array(
         }
 
         setPHP(value);
-    }, [query, variables, quote]);
+    }, [query, variables, quote, databaseName, queryName]);
 
     return (
         <>
             <Options>
-                <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
+                <QuoteStyle variant="php" quote={quote} setQuote={setQuote}></QuoteStyle>
+                <RenameButton variant="php" isShown={rename} setIsShown={setRename}></RenameButton>
             </Options>
+            <Rename
+                variant="php"
+                isShown={rename}
+                databaseName={databaseName}
+                setDatabaseName={setDatabaseName}
+                queryName={queryName}
+                setQueryName={setQueryName}
+            ></Rename>
             <Editor
+                variant="php"
                 aria-label="PHP Editor"
-                className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
                 onInput={(value) => {
                     let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);
                     let query = "";
