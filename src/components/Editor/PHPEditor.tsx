@@ -62,10 +62,11 @@ ${queryName}->execute(array(
     return (
         <>
             <Options>
-                <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
-                <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
+                <QuoteStyle variant="php" quote={quote} setQuote={setQuote}></QuoteStyle>
+                <RenameButton variant="php" isShown={rename} setIsShown={setRename}></RenameButton>
             </Options>
             <Rename
+                variant="php"
                 isShown={rename}
                 databaseName={databaseName}
                 setDatabaseName={setDatabaseName}
@@ -73,8 +74,8 @@ ${queryName}->execute(array(
                 setQueryName={setQueryName}
             ></Rename>
             <Editor
+                variant="php"
                 aria-label="PHP Editor"
-                className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
                 onInput={(value) => {
                     let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);
                     let query = "";

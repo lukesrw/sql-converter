@@ -91,11 +91,12 @@ ${queryName}.run({
     return (
         <>
             <Options>
-                <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
-                <NPMLibrary library={library} setLibrary={setLibrary}></NPMLibrary>
-                <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
+                <QuoteStyle variant="js" quote={quote} setQuote={setQuote}></QuoteStyle>
+                <NPMLibrary variant="js" library={library} setLibrary={setLibrary}></NPMLibrary>
+                <RenameButton variant="js" isShown={rename} setIsShown={setRename}></RenameButton>
             </Options>
             <Rename
+                variant="js"
                 isShown={rename}
                 databaseName={databaseName}
                 setDatabaseName={setDatabaseName}
@@ -104,7 +105,7 @@ ${queryName}.run({
             ></Rename>
             <Editor
                 aria-label="JS Editor"
-                className="bg-yellow-500/20 border-yellow-500/20 focus:border-yellow-500/40"
+                variant="js"
                 value={js}
                 setValue={setJS}
                 onInput={(value) => {
