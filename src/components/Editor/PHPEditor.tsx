@@ -7,36 +7,19 @@ import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
+import { Rename, RenameButton } from "../Controls/Rename";
 
 export function PHPEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
 
     const [php, setPHP] = useState("");
     const [quote, setQuote] = useState("'");
-    const [moreOptions, setMoreOptions] = useState(false);
+
+    const [rename, setRename] = useState(false);
     const [queryName, setQueryName] = useState("$query");
     const [databaseName, setDatabaseName] = useState("$Database");
 
     const textarea = useRef<HTMLTextAreaElement>(null);
-
-    const $moreOptions = useMemo(() => {
-        if (!moreOptions) return null;
-
-        return (
-            <>
-                <Options>
-                    <Label label="Database Name" className="w-full">
-                        <TextInput value={databaseName} setValue={setDatabaseName}></TextInput>
-                    </Label>
-                </Options>
-                <Options>
-                    <Label label="Query Name" className="w-full">
-                        <TextInput value={queryName} setValue={setQueryName}></TextInput>
-                    </Label>
-                </Options>
-            </>
-        );
-    }, [moreOptions, databaseName, setDatabaseName, queryName, setQuery]);
 
     /**
      * Update PHP textarea with the updated SQL/JS inputs
@@ -80,13 +63,15 @@ ${queryName}->execute(array(
         <>
             <Options>
                 <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
-                <Label label="Rename">
-                    <Button onClick={() => setMoreOptions((moreOptions) => !moreOptions)}>
-                        {moreOptions ? "-" : "+"}
-                    </Button>
-                </Label>
+                <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
             </Options>
-            {$moreOptions}
+            <Rename
+                isShown={rename}
+                databaseName={databaseName}
+                setDatabaseName={setDatabaseName}
+                queryName={queryName}
+                setQueryName={setQueryName}
+            ></Rename>
             <Editor
                 aria-label="PHP Editor"
                 className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
