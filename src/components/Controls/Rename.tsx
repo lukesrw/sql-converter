@@ -24,7 +24,7 @@ export function Rename(props: RenameProps) {
                     <TextInput value={props.databaseName} setValue={props.setDatabaseName}></TextInput>
                 </Label>
             </Options>
-            {props.queryName && (
+            {typeof props.queryName === "string" && (
                 <Options>
                     <Label label="Query Name" className="w-full">
                         <TextInput value={props.queryName} setValue={props.setQueryName}></TextInput>
