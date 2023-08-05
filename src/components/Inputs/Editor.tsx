@@ -10,7 +10,7 @@ import {
 import { twMerge } from "tailwind-merge";
 import { INPUT_VARIANTS } from "./Variants";
 
-export interface EditorProps extends Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label"> {
+export interface EditorProps extends Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label" | "className"> {
     variant?: keyof typeof INPUT_VARIANTS;
     textarea: RefObject<HTMLTextAreaElement>;
     value: string;
@@ -109,7 +109,8 @@ export function Editor(props: EditorProps) {
             ref={props.textarea}
             className={twMerge(
                 INPUT_VARIANTS[props.variant || "base"],
-                "h-full min-h-[16ch] outline-none resize-none whitespace-pre mt-0"
+                "h-full min-h-[16ch] outline-none resize-none whitespace-pre mt-0",
+                props.className
             )}
             style={{
                 fontFamily: "Consolas"
