@@ -1,10 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Editor } from "../Editor";
-import { NPMLibrary } from "../Inputs/NPMLibrary";
-import { QuoteStyle } from "../Inputs/QuoteStyle";
+import { NPMLibrary } from "../Controls/NPMLibrary";
+import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
+import { Label } from "../Label";
+import { Button } from "../Button";
+import { Rename, RenameButton } from "../Controls/Rename";
 
 export function JSEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -12,6 +15,10 @@ export function JSEditor() {
     const [js, setJS] = useState("");
     const [quote, setQuote] = useState('"');
     const [library, setLibrary] = useState("mysql");
+
+    const [rename, setRename] = useState(false);
+    const [queryName, setQueryName] = useState("query");
+    const [databaseName, setDatabaseName] = useState("database");
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -53,7 +60,7 @@ export function JSEditor() {
                     value = value.replace(`@${name}`, `:${name}`);
                 });
 
-                setJS(`await database.query(
+                setJS(`await ${databaseName}.query(
     ${escapeWrap(value, valueQuote)}${
                     names.length
                         ? `,
@@ -66,27 +73,35 @@ export function JSEditor() {
                 break;
 
             case "sqlite":
-                setJS(`const query = database.prepare(
+                setJS(`const ${queryName} = ${databaseName}.prepare(
     ${escapeWrap(value, valueQuote)}
 );${
                     names.length
                         ? `
 
-query.run({
+${queryName}.run({
     ${jsVariables}
 });`
                         : ""
                 }`);
                 break;
         }
-    }, [query, variables, quote, library]);
+    }, [query, variables, quote, library, databaseName, queryName]);
 
     return (
         <>
             <Options>
                 <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
                 <NPMLibrary library={library} setLibrary={setLibrary}></NPMLibrary>
+                <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
             </Options>
+            <Rename
+                isShown={rename}
+                databaseName={databaseName}
+                setDatabaseName={setDatabaseName}
+                queryName={library === "sqlite" ? queryName : undefined}
+                setQueryName={setQueryName}
+            ></Rename>
             <Editor
                 aria-label="JS Editor"
                 className="bg-yellow-500/20 border-yellow-500/20 focus:border-yellow-500/40"
