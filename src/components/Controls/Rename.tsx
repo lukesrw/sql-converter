@@ -19,18 +19,17 @@ export function Rename(props: RenameProps) {
 
     return (
         <>
+            <h3 className="block text-xl mb-2">Rename</h3>
             <Options>
-                <Label label="Database Name" className="w-full">
+                <Label label="Database" className="w-full">
                     <TextInput value={props.databaseName} setValue={props.setDatabaseName}></TextInput>
                 </Label>
-            </Options>
-            {typeof props.queryName === "string" && (
-                <Options>
-                    <Label label="Query Name" className="w-full">
+                {typeof props.queryName === "string" && (
+                    <Label label="Query" className="w-full">
                         <TextInput value={props.queryName} setValue={props.setQueryName}></TextInput>
                     </Label>
-                </Options>
-            )}
+                )}
+            </Options>
         </>
     );
 }
