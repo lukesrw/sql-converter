@@ -1,7 +1,8 @@
 import { LabelHTMLAttributes, PropsWithChildren } from "react";
 import { twMerge } from "tailwind-merge";
 
-export const INPUT_STYLE = "bg-white/10 p-4 py-3 block mt-2 rounded-xl font-normal border-4 border-white/20 w-full";
+export const INPUT_STYLE =
+    "bg-white/10 p-4 py-3 block mt-2 rounded-xl font-normal border-4 border-white/20 w-full outline-none";
 
 export interface LabelProps extends PropsWithChildren, Pick<LabelHTMLAttributes<HTMLLabelElement>, "className"> {
     label: string;
