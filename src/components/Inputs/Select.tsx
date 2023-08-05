@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
-import { INPUT_STYLE } from "./Label";
+import { INPUT_STYLE } from "../Label";
 
 export interface SelectProps {
     value: string;
