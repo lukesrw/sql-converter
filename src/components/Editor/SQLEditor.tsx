@@ -1,6 +1,6 @@
 import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { format } from "sql-formatter";
-import { Editor } from "../Editor";
+import { Editor } from "../Inputs/Editor";
 import { Label } from "../Label";
 import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Options } from "../Options";

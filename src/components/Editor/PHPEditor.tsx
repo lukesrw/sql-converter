@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../Button";
 import { QuoteStyle } from "../Controls/QuoteStyle";
-import { Editor } from "../Editor";
+import { Editor } from "../Inputs/Editor";
 import { TextInput } from "../Inputs/TextInput";
 import { Label } from "../Label";
 import { Options } from "../Options";

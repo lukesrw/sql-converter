@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Editor } from "../Editor";
+import { Editor } from "../Inputs/Editor";
 import { NPMLibrary } from "../Controls/NPMLibrary";
 import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Options } from "../Options";
