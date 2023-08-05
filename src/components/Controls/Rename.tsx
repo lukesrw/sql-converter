@@ -10,7 +10,7 @@ export interface RenameProps {
     databaseName: string;
     setDatabaseName: Dispatch<SetStateAction<string>>;
 
-    queryName: string;
+    queryName?: string;
     setQueryName: Dispatch<SetStateAction<string>>;
 }
 
@@ -24,11 +24,13 @@ export function Rename(props: RenameProps) {
                     <TextInput value={props.databaseName} setValue={props.setDatabaseName}></TextInput>
                 </Label>
             </Options>
-            <Options>
-                <Label label="Query Name" className="w-full">
-                    <TextInput value={props.queryName} setValue={props.setQueryName}></TextInput>
-                </Label>
-            </Options>
+            {props.queryName && (
+                <Options>
+                    <Label label="Query Name" className="w-full">
+                        <TextInput value={props.queryName} setValue={props.setQueryName}></TextInput>
+                    </Label>
+                </Options>
+            )}
         </>
     );
 }
