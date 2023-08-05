@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
+import { twMerge } from "tailwind-merge";
+import { INPUT_STYLE } from "./Label";
 
 export interface SelectProps {
     value: string;
@@ -9,7 +11,7 @@ export interface SelectProps {
 export function Select(props: SelectProps) {
     return (
         <select
-            className="bg-white/10 p-4 py-3 block mt-2 rounded-xl font-normal border-4 border-white/20 focus:border-white/40"
+            className={twMerge(INPUT_STYLE, "focus:border-white/40")}
             value={props.value}
             onChange={(event) => props.setValue(event.currentTarget.value)}
         >
