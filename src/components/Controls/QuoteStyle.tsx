@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Label } from "../Label";
-import { Select } from "../Select";
+import { Select } from "../Inputs/Select";
 
 export interface QuoteStyleProps {
     quote: string;
