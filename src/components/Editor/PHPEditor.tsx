@@ -1,6 +1,9 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "../Button";
+import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Editor } from "../Editor";
-import { QuoteStyle } from "../Inputs/QuoteStyle";
+import { TextInput } from "../Inputs/TextInput";
+import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
@@ -10,8 +13,30 @@ export function PHPEditor() {
 
     const [php, setPHP] = useState("");
     const [quote, setQuote] = useState("'");
+    const [moreOptions, setMoreOptions] = useState(false);
+    const [queryName, setQueryName] = useState("$query");
+    const [databaseName, setDatabaseName] = useState("$Database");
 
     const textarea = useRef<HTMLTextAreaElement>(null);
+
+    const $moreOptions = useMemo(() => {
+        if (!moreOptions) return null;
+
+        return (
+            <>
+                <Options>
+                    <Label label="Database Name" className="w-full">
+                        <TextInput value={databaseName} setValue={setDatabaseName}></TextInput>
+                    </Label>
+                </Options>
+                <Options>
+                    <Label label="Query Name" className="w-full">
+                        <TextInput value={queryName} setValue={setQueryName}></TextInput>
+                    </Label>
+                </Options>
+            </>
+        );
+    }, [moreOptions, databaseName, setDatabaseName, queryName, setQuery]);
 
     /**
      * Update PHP textarea with the updated SQL/JS inputs
@@ -32,14 +57,14 @@ export function PHPEditor() {
             value = value.replace(`@${name}`, `:${name}`);
         });
 
-        value = `$query = $Database->${names.length ? "prepare" : "query"}(
+        value = `${queryName} = ${databaseName}->${names.length ? "prepare" : "query"}(
     ${escapeWrap(value, quote)}
 );`;
 
         if (names.length) {
             value += `
 
-$query->execute(array(
+${queryName}->execute(array(
     ${names
         .map((name) => {
             return `${escapeWrap(":" + name, quote)} => ${escapeWrap(variables[name], quote)}`;
@@ -49,13 +74,19 @@ $query->execute(array(
         }
 
         setPHP(value);
-    }, [query, variables, quote]);
+    }, [query, variables, quote, databaseName, queryName]);
 
     return (
         <>
             <Options>
                 <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
+                <Label label="Rename">
+                    <Button onClick={() => setMoreOptions((moreOptions) => !moreOptions)}>
+                        {moreOptions ? "-" : "+"}
+                    </Button>
+                </Label>
             </Options>
+            {$moreOptions}
             <Editor
                 aria-label="PHP Editor"
                 className="bg-indigo-500/20 border-indigo-500/20 focus:border-indigo-500/40"
