@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Input } from "../Input";
+import { Label } from "../Label";
 import { Select } from "../Select";
 
 export interface NPMLibraryProps {
@@ -9,7 +9,7 @@ export interface NPMLibraryProps {
 
 export function NPMLibrary(props: NPMLibraryProps) {
     return (
-        <Input label="NPM Library">
+        <Label label="NPM Library">
             <Select
                 options={{
                     mysql: "mysql2",
@@ -18,6 +18,6 @@ export function NPMLibrary(props: NPMLibraryProps) {
                 setValue={props.setLibrary}
                 value={props.library}
             ></Select>
-        </Input>
+        </Label>
     );
 }

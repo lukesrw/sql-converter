@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Input } from "../Input";
+import { Label } from "../Label";
 import { Select } from "../Select";
 
 export interface QuoteStyleProps {
@@ -9,15 +9,15 @@ export interface QuoteStyleProps {
 
 export function QuoteStyle(props: QuoteStyleProps) {
     return (
-        <Input label="Quote Style">
+        <Label label="Quote Style">
             <Select
                 value={props.quote}
                 setValue={props.setQuote}
                 options={{
                     "'": "Single Quote (')",
-                    '"': 'Double Quote (")',
+                    '"': 'Double Quote (")'
                 }}
             ></Select>
-        </Input>
+        </Label>
     );
 }
