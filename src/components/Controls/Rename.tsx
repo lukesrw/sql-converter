@@ -23,7 +23,7 @@ export function Rename(props: RenameProps) {
         <>
             <h3 className="block text-xl mb-2">Rename</h3>
             <Options>
-                <Label label="Database" className="w-full">
+                <Label label="Database">
                     <TextInput
                         variant={props.variant}
                         value={props.databaseName}
@@ -31,7 +31,7 @@ export function Rename(props: RenameProps) {
                     ></TextInput>
                 </Label>
                 {typeof props.queryName === "string" && (
-                    <Label label="Query" className="w-full">
+                    <Label label="Query">
                         <TextInput
                             variant={props.variant}
                             value={props.queryName}

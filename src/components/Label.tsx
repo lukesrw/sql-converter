@@ -1,13 +1,12 @@
-import { LabelHTMLAttributes, PropsWithChildren } from "react";
-import { twMerge } from "tailwind-merge";
+import { PropsWithChildren } from "react";
 
-export interface LabelProps extends PropsWithChildren, Pick<LabelHTMLAttributes<HTMLLabelElement>, "className"> {
+export interface LabelProps extends PropsWithChildren {
     label: string;
 }
 
 export function Label(props: LabelProps) {
     return (
-        <label className={twMerge("text-sm font-semibold mb-4 block", props.className)}>
+        <label className="text-sm font-semibold mb-4 block">
             {props.label}
             {props.children}
         </label>
