@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { twMerge } from "tailwind-merge";
-import { INPUT_STYLE } from "../Label";
+import { INPUT_VARIANTS } from "./Variants";
 
 export interface TextInputProps {
     value: string;
@@ -11,7 +11,7 @@ export function TextInput(props: TextInputProps) {
     return (
         <input
             value={props.value}
-            className={twMerge(INPUT_STYLE)}
+            className={twMerge(INPUT_VARIANTS.base)}
             onChange={(event) => props.setValue(event.currentTarget.value)}
         ></input>
     );
