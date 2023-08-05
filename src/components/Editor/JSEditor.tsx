@@ -109,7 +109,7 @@ ${queryName}.run({
                 setValue={setJS}
                 onInput={(value) => {
                     let match = value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+?)(?<!\\)\1/is);
-                    let query = '"';
+                    let query = "";
                     let quote = "";
                     let variables: Variables = {};
                     if (match) {
