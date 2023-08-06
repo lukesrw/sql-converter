@@ -60,7 +60,7 @@ WHERE
 
     return (
         <>
-            <main className="p-4 pb-0 gap-4 xl:p-8 xl:pb-0 xl:gap-6 h-full grid grid-cols-1 xl:grid-cols-3">
+            <main className="p-4 pb-0 gap-4 xl:p-6 xl:pb-0 xl:gap-6 h-full grid grid-cols-1 xl:grid-cols-3">
                 <QueryContext.Provider
                     value={{
                         query,
