@@ -95,7 +95,7 @@ ${queryName}->execute(array(
                         } while (match);
 
                         Object.keys(variables).forEach((name) => {
-                            query = query.replace(`:${name}`, `@${name}`);
+                            query = query.replace(new RegExp(`:${name}`, "g"), `@${name}`);
                         });
                     }
 
