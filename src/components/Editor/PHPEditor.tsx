@@ -48,8 +48,10 @@ export function PHPEditor() {
 ${queryName}->execute(array(
     ${names
         .map((name) => {
-            let variable = variableValues[name] || variables[name];
-            if (!variable.startsWith("$")) {
+            let variable = variables[name];
+            if (name in variableValues) {
+                variable = variableValues[name];
+            } else if (!variable.startsWith("$")) {
                 variable = escapeWrap(variable, quote);
             }
 

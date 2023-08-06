@@ -49,7 +49,7 @@ export function JSEditor() {
                     objectName = escapeWrap(objectName, quote);
                 }
 
-                return `${objectName}: ${escapeWrap(variableValues[name] || variables[name], quote)}`;
+                return `${objectName}: ${variableValues[name] || escapeWrap(variables[name], quote)}`;
             })
             .join(",\n\t" + (library === "mysql" ? "\t" : ""));
 
