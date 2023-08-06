@@ -1,13 +1,14 @@
 import { ReactNode, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { format } from "sql-formatter";
-import { Editor } from "../Inputs/Editor";
-import { Label } from "../Label";
-import { QuoteStyle } from "../Controls/QuoteStyle";
-import { Options } from "../Options";
-import { escapeWrap } from "../lib/escapeWrap";
 import { twMerge } from "tailwind-merge";
 import { Button } from "../Button";
+import { QuoteStyle } from "../Controls/QuoteStyle";
+import { Rename, RenameButton } from "../Controls/Rename";
+import { Editor } from "../Inputs/Editor";
+import { Label } from "../Label";
+import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
+import { escapeWrap } from "../lib/escapeWrap";
 
 export function SQLEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -15,6 +16,8 @@ export function SQLEditor() {
     const [sql, setSQL] = useState("");
     const [quote, setQuote] = useState("'");
     const [error, setError] = useState("");
+    const [rename, setRename] = useState(false);
+    const [variableValues, setVariableValues] = useState<Variables>({});
 
     /**
      * Parse the sql-formatter error for end user
@@ -72,7 +75,7 @@ export function SQLEditor() {
         if (names.length) {
             value = `${names
                 .map((name) => {
-                    return `SET @${name} = ${escapeWrap(variables[name], quote)};`;
+                    return `SET @${name} = ${escapeWrap(variableValues[name] || variables[name], quote)};`;
                 })
                 .join("\n")}
 
@@ -80,7 +83,7 @@ ${value}`;
         }
 
         setSQL(value);
-    }, [query, variables, quote]);
+    }, [query, variables, quote, variableValues]);
 
     /**
      * Automatically hide formatting error if query/variables update
@@ -121,7 +124,11 @@ ${value}`;
                         Auto
                     </Button>
                 </Label>
+                {Object.keys(variables).length > 0 && (
+                    <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
+                )}
             </Options>
+            <Rename isShown={rename} variableValues={variableValues} setVariableValues={setVariableValues}></Rename>
             {$error}
             <Editor
                 aria-label="SQL Editor"

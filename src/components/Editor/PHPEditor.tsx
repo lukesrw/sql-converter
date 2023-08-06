@@ -1,13 +1,10 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "../Button";
+import { useContext, useEffect, useRef, useState } from "react";
 import { QuoteStyle } from "../Controls/QuoteStyle";
+import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
-import { TextInput } from "../Inputs/TextInput";
-import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
-import { Rename, RenameButton } from "../Controls/Rename";
 
 export function PHPEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -18,6 +15,7 @@ export function PHPEditor() {
     const [rename, setRename] = useState(false);
     const [queryName, setQueryName] = useState("$query");
     const [databaseName, setDatabaseName] = useState("$Database");
+    const [variableValues, setVariableValues] = useState<Variables>({});
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -50,7 +48,7 @@ export function PHPEditor() {
 ${queryName}->execute(array(
     ${names
         .map((name) => {
-            let variable = variables[name];
+            let variable = variableValues[name] || variables[name];
             if (!variable.startsWith("$")) {
                 variable = escapeWrap(variable, quote);
             }
@@ -62,7 +60,7 @@ ${queryName}->execute(array(
         }
 
         setPHP(value);
-    }, [query, variables, quote, databaseName, queryName]);
+    }, [query, variables, quote, databaseName, queryName, variableValues]);
 
     return (
         <>
@@ -77,6 +75,8 @@ ${queryName}->execute(array(
                 setDatabaseName={setDatabaseName}
                 queryName={queryName}
                 setQueryName={setQueryName}
+                variableValues={variableValues}
+                setVariableValues={setVariableValues}
             ></Rename>
             <Editor
                 variant="php"
