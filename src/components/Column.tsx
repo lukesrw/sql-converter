@@ -6,7 +6,7 @@ export interface ColumnProps extends PropsWithChildren {
 
 export function Column(props: ColumnProps) {
     return (
-        <div className="flex-1 flex flex-col mb-4 xl:mb-8">
+        <div className="flex-1 flex flex-col pb-8 xl:pb-0 xl:mb-4">
             <h1 className="text-3xl mb-4 font-extrabold">{props.title}</h1>
 
             {props.children}
