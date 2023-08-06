@@ -1,10 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "../Button";
 import { QuoteStyle } from "../Controls/QuoteStyle";
-import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
+import { TextInput } from "../Inputs/TextInput";
+import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
+import { Rename, RenameButton } from "../Controls/Rename";
 
 export function PHPEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -48,10 +51,8 @@ export function PHPEditor() {
 ${queryName}->execute(array(
     ${names
         .map((name) => {
-            let variable = variables[name];
-            if (name in variableValues) {
-                variable = variableValues[name];
-            } else if (!variable.startsWith("$")) {
+            let variable = variableValues[name] || variables[name];
+            if (!variable.startsWith("$")) {
                 variable = escapeWrap(variable, quote);
             }
 
