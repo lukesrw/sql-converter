@@ -18,6 +18,7 @@ export function PHPEditor() {
     const [rename, setRename] = useState(false);
     const [queryName, setQueryName] = useState("$query");
     const [databaseName, setDatabaseName] = useState("$Database");
+    const [variableValues, setVariableValues] = useState<Variables>({});
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -50,7 +51,7 @@ export function PHPEditor() {
 ${queryName}->execute(array(
     ${names
         .map((name) => {
-            let variable = variables[name];
+            let variable = variableValues[name] || variables[name];
             if (!variable.startsWith("$")) {
                 variable = escapeWrap(variable, quote);
             }
@@ -62,7 +63,7 @@ ${queryName}->execute(array(
         }
 
         setPHP(value);
-    }, [query, variables, quote, databaseName, queryName]);
+    }, [query, variables, quote, databaseName, queryName, variableValues]);
 
     return (
         <>
@@ -77,6 +78,8 @@ ${queryName}->execute(array(
                 setDatabaseName={setDatabaseName}
                 queryName={queryName}
                 setQueryName={setQueryName}
+                variableValues={variableValues}
+                setVariableValues={setVariableValues}
             ></Rename>
             <Editor
                 variant="php"

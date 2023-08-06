@@ -1,13 +1,11 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Editor } from "../Inputs/Editor";
 import { NPMLibrary } from "../Controls/NPMLibrary";
 import { QuoteStyle } from "../Controls/QuoteStyle";
+import { Rename, RenameButton } from "../Controls/Rename";
+import { Editor } from "../Inputs/Editor";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 import { escapeWrap } from "../lib/escapeWrap";
-import { Label } from "../Label";
-import { Button } from "../Button";
-import { Rename, RenameButton } from "../Controls/Rename";
 
 export function JSEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -19,6 +17,7 @@ export function JSEditor() {
     const [rename, setRename] = useState(false);
     const [queryName, setQueryName] = useState("query");
     const [databaseName, setDatabaseName] = useState("database");
+    const [variableValues, setVariableValues] = useState<Variables>({});
 
     const textarea = useRef<HTMLTextAreaElement>(null);
 
@@ -50,7 +49,14 @@ export function JSEditor() {
                     objectName = escapeWrap(objectName, quote);
                 }
 
-                return `${objectName}: ${escapeWrap(variables[name], quote)}`;
+                let variable = variables[name];
+                if (name in variableValues) {
+                    variable = variableValues[name];
+                } else {
+                    variable = escapeWrap(variable, quote);
+                }
+
+                return `${objectName}: ${variable}`;
             })
             .join(",\n\t" + (library === "mysql" ? "\t" : ""));
 
@@ -86,7 +92,7 @@ ${queryName}.run({
                 }`);
                 break;
         }
-    }, [query, variables, quote, library, databaseName, queryName]);
+    }, [query, variables, quote, library, databaseName, queryName, variableValues]);
 
     return (
         <>
@@ -102,6 +108,8 @@ ${queryName}.run({
                 setDatabaseName={setDatabaseName}
                 queryName={library === "sqlite" ? queryName : undefined}
                 setQueryName={setQueryName}
+                variableValues={variableValues}
+                setVariableValues={setVariableValues}
             ></Rename>
             <Editor
                 aria-label="JS Editor"

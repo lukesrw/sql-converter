@@ -1,19 +1,19 @@
-import { Dispatch, SetStateAction } from "react";
-import { twMerge } from "tailwind-merge";
+import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 import { INPUT_VARIANTS } from "./Variants";
 
-export interface TextInputProps {
-    variant: keyof typeof INPUT_VARIANTS;
+export interface TextInputProps
+    extends Pick<DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "placeholder"> {
+    variant?: keyof typeof INPUT_VARIANTS;
     value: string;
-    setValue: Dispatch<SetStateAction<string>>;
+    setValue: (value: string) => void;
 }
 
-export function TextInput(props: TextInputProps) {
+export function TextInput({ variant, setValue, ...props }: TextInputProps) {
     return (
         <input
-            value={props.value}
-            className={INPUT_VARIANTS[props.variant || "base"]}
-            onChange={(event) => props.setValue(event.currentTarget.value)}
+            {...props}
+            className={INPUT_VARIANTS[variant || "base"]}
+            onChange={(event) => setValue(event.currentTarget.value)}
         ></input>
     );
 }
