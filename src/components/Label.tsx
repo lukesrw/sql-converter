@@ -7,7 +7,7 @@ export interface LabelProps extends PropsWithChildren, Pick<LabelHTMLAttributes<
 
 export function Label(props: LabelProps) {
     return (
-        <label className={twMerge("text-sm font-semibold mb-4 block", props.className)}>
+        <label className={twMerge("text-sm font-semibold my-2 block", props.className)}>
             {props.label}
             {props.children}
         </label>

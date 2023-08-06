@@ -29,7 +29,7 @@ export function Rename(props: RenameProps) {
 
     return (
         <>
-            <h3 className="block text-xl mb-2">Rename</h3>
+            <h3 className="block text-xl mt-4">Rename</h3>
             {hasDatabaseOrQuery && (
                 <Options>
                     {typeof props.databaseName === "string" && typeof props.setDatabaseName === "function" && (
