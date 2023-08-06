@@ -1,13 +1,6 @@
-import {
-    DetailedHTMLProps,
-    Dispatch,
-    RefObject,
-    SetStateAction,
-    TextareaHTMLAttributes,
-    useEffect,
-    useState
-} from "react";
+import { Dispatch, RefObject, SetStateAction, TextareaHTMLAttributes, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { Label } from "../Label";
 import { INPUT_VARIANTS } from "./Variants";
 
 export interface EditorProps extends Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label" | "className"> {
@@ -103,46 +96,51 @@ export function Editor(props: EditorProps) {
     }, [removeTab]);
 
     return (
-        <textarea
-            aria-label={props["aria-label"]}
-            spellCheck={false}
-            ref={props.textarea}
-            className={twMerge(
-                INPUT_VARIANTS[props.variant || "base"],
-                "h-full min-h-[16ch] outline-none resize-none whitespace-pre mt-0",
-                props.className
-            )}
-            style={{
-                fontFamily: "Consolas"
-            }}
-            wrap="soft"
-            value={props.value}
-            onKeyDownCapture={(event) => {
-                if (event.key !== "Tab") return;
+        <Label
+            label={<span className="xl:hidden">{((props.variant || "") + " SQL").toUpperCase().trim()}</span>}
+            className="h-full"
+        >
+            <textarea
+                aria-label={props["aria-label"]}
+                spellCheck={false}
+                ref={props.textarea}
+                className={twMerge(
+                    INPUT_VARIANTS[props.variant || "base"],
+                    "h-full min-h-[16ch] outline-none resize-none whitespace-pre xl:mt-0",
+                    props.className
+                )}
+                style={{
+                    fontFamily: "Consolas"
+                }}
+                wrap="soft"
+                value={props.value}
+                onKeyDownCapture={(event) => {
+                    if (event.key !== "Tab") return;
 
-                event.preventDefault();
-                event.stopPropagation();
+                    event.preventDefault();
+                    event.stopPropagation();
 
-                let { selectionStart, selectionEnd } = event.currentTarget;
+                    let { selectionStart, selectionEnd } = event.currentTarget;
 
-                if (event.shiftKey) {
-                    let match = props.value.substring(selectionStart - 4, selectionStart).match(/(\t| {0,4})$/);
+                    if (event.shiftKey) {
+                        let match = props.value.substring(selectionStart - 4, selectionStart).match(/(\t| {0,4})$/);
 
-                    setRemoveTab([selectionStart, match ? match[0] : ""]);
-                } else {
-                    setInsertTab([selectionStart, selectionEnd]);
-                }
+                        setRemoveTab([selectionStart, match ? match[0] : ""]);
+                    } else {
+                        setInsertTab([selectionStart, selectionEnd]);
+                    }
 
-                return false;
-            }}
-            onInput={(event) => {
-                props.setValue(event.currentTarget.value);
+                    return false;
+                }}
+                onInput={(event) => {
+                    props.setValue(event.currentTarget.value);
 
-                props.onInput(event.currentTarget.value);
-            }}
-            onBlur={(event) => {
-                props.onInput(event.currentTarget.value);
-            }}
-        ></textarea>
+                    props.onInput(event.currentTarget.value);
+                }}
+                onBlur={(event) => {
+                    props.onInput(event.currentTarget.value);
+                }}
+            ></textarea>
+        </Label>
     );
 }
