@@ -50,7 +50,12 @@ export function PHPEditor() {
 ${queryName}->execute(array(
     ${names
         .map((name) => {
-            return `${escapeWrap(":" + name, quote)} => ${escapeWrap(variables[name], quote)}`;
+            let variable = variables[name];
+            if (!variable.startsWith("$")) {
+                variable = escapeWrap(variable, quote);
+            }
+
+            return `${escapeWrap(":" + name, quote)} => ${variable}`;
         })
         .join(",\n\t")}
 ));`;
