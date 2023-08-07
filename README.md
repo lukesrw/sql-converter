@@ -6,7 +6,7 @@
 
 Using the converter you can quickly swap between writing application JS/PHP code and database SQL queries.
 
-Do you want to try the JS with different values? Is it slow debugging in PHP? Paste it into the language box and use SQL directly.
+Want to try your query with different values? Slow debugging in-application? Paste the code and use SQL directly.
 
 Once you're happy that the updated SQL works, copy the JS/PHP back into your application and get back to work!
 
