@@ -14,5 +14,5 @@ export function escapeWrap(text: string, quote: string) {
         return text;
     }
 
-    return quote + text.replace(new RegExp(quote, "g"), `\\${quote}`) + quote;
+    return quote + text.replace(new RegExp(`(?<!\\\\)${quote}`, "g"), `\\${quote}`) + quote;
 }
