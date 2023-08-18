@@ -119,11 +119,11 @@ ${queryName}.run({
                 onInput={(value) => {
                     let match = value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+?)(?<!\\)\1/is);
                     let query = "";
-                    let quote = "";
+                    let queryQuote = "";
                     let variables: Variables = {};
                     if (match) {
                         query = match?.groups?.query || "";
-                        quote = match[1];
+                        queryQuote = match[1];
 
                         do {
                             match = value.match(/(?<name>\w+):\s*(?<quote>"|'|)(?<value>.+?)(?:,|\s*})/);
@@ -150,7 +150,7 @@ ${queryName}.run({
 
                     setQuery(
                         query
-                            .replace(new RegExp(`\\\\${quote}`, "g"), quote)
+                            .replace(new RegExp(`\\\\${queryQuote}`, "g"), queryQuote)
                             .split("\n")
                             .map((line) => line.replace(/^(\t|\s{0,4})/, ""))
                             .join("\n")
