@@ -16,3 +16,14 @@ export function escapeWrap(text: string, quote: string) {
 
     return quote + text.replace(new RegExp(`(?<!\\\\)${quote}`, "g"), `\\${quote}`) + quote;
 }
+
+/**
+ * Unescape a string
+ *
+ * @param text to unescape
+ * @param quote to use for the unescaping
+ * @returns {string} original string before escaping
+ */
+export function unescape(text: string, quote: string) {
+    return text.replace(new RegExp(`\\\\${quote}`, "g"), quote);
+}
