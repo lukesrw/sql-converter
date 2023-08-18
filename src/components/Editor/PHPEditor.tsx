@@ -1,13 +1,10 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "../Button";
+import { useContext, useEffect, useRef, useState } from "react";
 import { QuoteStyle } from "../Controls/QuoteStyle";
+import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
-import { TextInput } from "../Inputs/TextInput";
-import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
-import { escapeWrap } from "../lib/escapeWrap";
-import { Rename, RenameButton } from "../Controls/Rename";
+import { escapeWrap, unescape } from "../lib/escape";
 
 export function PHPEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -94,12 +91,21 @@ ${queryName}->execute(array(
                         quote = match[1];
 
                         do {
-                            match = value.match(/('|"):(?<name>.+?)\1 => ('|"|)(?<value>.+?)[\3\W]/);
+                            match = value.match(/('|"):(?<name>.+?)\1 => (?<quote>'|"|)(?<value>.+?)(?:,|\s*\)\))/);
 
-                            if (match && match.groups) {
+                            if (!(match && match.groups)) break;
+
+                            if (match.groups.quote.length && match.groups.value.endsWith(match.groups.quote)) {
+                                variables[match.groups.name] = match.groups.value.substring(
+                                    0,
+                                    match.groups.value.length - 1
+                                );
+                            } else {
                                 variables[match.groups.name] = match.groups.value;
-                                value = value.replace(match[0], "");
                             }
+                            variables[match.groups.name] = unescape(variables[match.groups.name], quote);
+
+                            value = value.replace(match[0], "");
                         } while (match);
 
                         Object.keys(variables).forEach((name) => {
