@@ -5,7 +5,7 @@ import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
-import { escapeWrap } from "../lib/escapeWrap";
+import { escapeWrap, unescape } from "../lib/escape";
 
 export function JSEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -119,19 +119,28 @@ ${queryName}.run({
                 onInput={(value) => {
                     let match = value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+?)(?<!\\)\1/is);
                     let query = "";
-                    let quote = "";
+                    let queryQuote = "";
                     let variables: Variables = {};
                     if (match) {
                         query = match?.groups?.query || "";
-                        quote = match[1];
+                        queryQuote = match[1];
 
                         do {
-                            match = value.match(/(?<name>\w+):\s*("|'|)(?<value>.+?)[\2\W]/);
+                            match = value.match(/(?<name>\w+):\s*(?<quote>"|'|)(?<value>.+?)(?:,|\s*})/);
 
-                            if (match && match.groups) {
+                            if (!(match && match.groups)) break;
+
+                            if (match.groups.quote.length && match.groups.value.endsWith(match.groups.quote)) {
+                                variables[match.groups.name] = match.groups.value.substring(
+                                    0,
+                                    match.groups.value.length - 1
+                                );
+                            } else {
                                 variables[match.groups.name] = match.groups.value;
-                                value = value.replace(match[0], "");
                             }
+                            variables[match.groups.name] = unescape(variables[match.groups.name], quote);
+
+                            value = value.replace(match[0], "");
                         } while (match);
 
                         Object.keys(variables).forEach((name) => {
@@ -141,7 +150,7 @@ ${queryName}.run({
 
                     setQuery(
                         query
-                            .replace(new RegExp(`\\\\${quote}`, "g"), quote)
+                            .replace(new RegExp(`\\\\${queryQuote}`, "g"), queryQuote)
                             .split("\n")
                             .map((line) => line.replace(/^(\t|\s{0,4})/, ""))
                             .join("\n")

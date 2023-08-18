@@ -8,7 +8,7 @@ import { Editor } from "../Inputs/Editor";
 import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
-import { escapeWrap } from "../lib/escapeWrap";
+import { escapeWrap, unescape } from "../lib/escape";
 
 export function SQLEditor() {
     const { query, setQuery, variables, setVariables } = useContext(QueryContext);
@@ -143,7 +143,7 @@ ${value}`;
                         match = value.match(/set\s*@(?<name>\w+)\s*=\s*('|"|)(?<value>.+?)(?<!\\)\2;/i);
 
                         if (match && match.groups) {
-                            valueVariables[match.groups.name] = match.groups.value;
+                            valueVariables[match.groups.name] = unescape(match.groups.value, quote);
                             value = value.replace(match[0], "").trimStart();
                         }
                     } while (match);
