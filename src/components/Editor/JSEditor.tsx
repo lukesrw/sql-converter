@@ -63,7 +63,7 @@ export function JSEditor() {
         switch (library) {
             case "mysql":
                 names.forEach((name) => {
-                    value = value.replace(`@${name}`, `:${name}`);
+                    value = value.replace(new RegExp(`@${name}`, "g"), `:${name}`);
                 });
 
                 setJS(`await ${databaseName}.query(
@@ -144,7 +144,7 @@ ${queryName}.run({
                         } while (match);
 
                         Object.keys(variables).forEach((name) => {
-                            query = query.replace(`:${name}`, `@${name}`);
+                            query = query.replace(new RegExp(`:${name}`, "g"), `@${name}`);
                         });
                     }
 
