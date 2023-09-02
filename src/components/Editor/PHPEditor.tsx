@@ -35,7 +35,7 @@ export function PHPEditor() {
             })
             .join("\n");
         names.forEach((name) => {
-            value = value.replace(`@${name}`, `:${name}`);
+            value = value.replace(new RegExp(`@${name}`, "g"), `:${name}`);
         });
 
         value = `${queryName} = ${databaseName}->${names.length ? "prepare" : "query"}(
