@@ -70,13 +70,13 @@ WHERE
                     }}
                 >
                     <Column title="SQL">
-                        <SQLEditor></SQLEditor>
+                        <SQLEditor />
                     </Column>
                     <Column title="JS">
-                        <JSEditor></JSEditor>
+                        <JSEditor />
                     </Column>
                     <Column title="PHP">
-                        <PHPEditor></PHPEditor>
+                        <PHPEditor />
                     </Column>
                 </QueryContext.Provider>
             </main>
