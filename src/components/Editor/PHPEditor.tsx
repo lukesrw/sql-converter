@@ -82,7 +82,9 @@ ${queryName}->execute(array(
                 variant="php"
                 aria-label="PHP Editor"
                 onInput={(value) => {
-                    let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);
+                    let match = value.match(
+                        /(?:prepare|query|single|select|group|exec)\(\s*('|")(?<query>.+?)(?<!\\)\1/is
+                    );
                     let query = "";
                     let quote = "'";
                     const variables: Variables = {};
