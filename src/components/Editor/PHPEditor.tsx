@@ -85,25 +85,24 @@ ${queryName}->execute(array(
                     let match = value.match(/(?:prepare|query)\(\s*('|")(?<query>.+?)(?<!\\)\1/is);
                     let query = "";
                     let quote = "'";
-                    let variables: Variables = {};
+                    const variables: Variables = {};
                     if (match) {
                         query = match?.groups?.query || "";
                         quote = match[1];
 
                         do {
-                            match = value.match(/('|"):(?<name>.+?)\1 => (?<quote>'|"|)(?<value>.+?)(?:,|\s*\)\))/);
+                            match = value.match(
+                                /['"]:(?<name>\w+)['"]\s*=>\s*(?:'(?<value_sq>[^']*)'|"(?<value_dq>[^"]*)"|(?<value_plain>[^,\n)]+))/
+                            );
 
-                            if (!(match && match.groups)) break;
-
-                            if (match.groups.quote.length && match.groups.value.endsWith(match.groups.quote)) {
-                                variables[match.groups.name] = match.groups.value.substring(
-                                    0,
-                                    match.groups.value.length - 1
-                                );
-                            } else {
-                                variables[match.groups.name] = match.groups.value;
+                            if (!(match && match.groups)) {
+                                break;
                             }
-                            variables[match.groups.name] = unescape(variables[match.groups.name], quote);
+
+                            variables[match.groups.name] = unescape(
+                                match.groups.value_sq ?? match.groups.value_dq ?? match.groups.value_plain,
+                                quote
+                            );
 
                             value = value.replace(match[0], "");
                         } while (match);
