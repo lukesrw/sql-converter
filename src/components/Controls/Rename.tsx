@@ -40,16 +40,12 @@ export function Rename(props: Readonly<Rename.Props>) {
                                 variant={props.variant}
                                 value={props.databaseName}
                                 setValue={props.setDatabaseName}
-                            ></TextInput>
+                            />
                         </Label>
                     )}
                     {typeof props.queryName === "string" && typeof props.setQueryName === "function" && (
                         <Label label="Query">
-                            <TextInput
-                                variant={props.variant}
-                                value={props.queryName}
-                                setValue={props.setQueryName}
-                            ></TextInput>
+                            <TextInput variant={props.variant} value={props.queryName} setValue={props.setQueryName} />
                         </Label>
                     )}
                 </Options>
@@ -76,7 +72,7 @@ export function Rename(props: Readonly<Rename.Props>) {
                                         return variableNames;
                                     });
                                 }}
-                            ></TextInput>
+                            />
                         </Label>
                     );
                 })}

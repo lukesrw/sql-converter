@@ -95,7 +95,7 @@ ${value}`;
     return (
         <>
             <Options>
-                <QuoteStyle quote={quote} setQuote={setQuote}></QuoteStyle>
+                <QuoteStyle quote={quote} setQuote={setQuote} />
                 <Label label="Format">
                     <Button
                         onClick={() => {
@@ -124,11 +124,9 @@ ${value}`;
                         Auto
                     </Button>
                 </Label>
-                {Object.keys(variables).length > 0 && (
-                    <RenameButton isShown={rename} setIsShown={setRename}></RenameButton>
-                )}
+                {Object.keys(variables).length > 0 && <RenameButton isShown={rename} setIsShown={setRename} />}
             </Options>
-            <Rename isShown={rename} variableValues={variableValues} setVariableValues={setVariableValues}></Rename>
+            <Rename isShown={rename} variableValues={variableValues} setVariableValues={setVariableValues} />
             {$error}
             <Editor
                 aria-label="SQL Editor"
@@ -151,7 +149,7 @@ ${value}`;
                     setQuery(value);
                     setVariables(valueVariables);
                 }}
-            ></Editor>
+            />
         </>
     );
 }

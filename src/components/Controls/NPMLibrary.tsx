@@ -22,7 +22,7 @@ export function NPMLibrary(props: Readonly<NPMLibrary.Props>) {
                 }}
                 setValue={props.setLibrary}
                 value={props.library}
-            ></Select>
+            />
         </Label>
     );
 }

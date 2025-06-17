@@ -97,9 +97,9 @@ ${queryName}.run({
     return (
         <>
             <Options>
-                <QuoteStyle variant="js" quote={quote} setQuote={setQuote}></QuoteStyle>
-                <NPMLibrary variant="js" library={library} setLibrary={setLibrary}></NPMLibrary>
-                <RenameButton variant="js" isShown={rename} setIsShown={setRename}></RenameButton>
+                <QuoteStyle variant="js" quote={quote} setQuote={setQuote} />
+                <NPMLibrary variant="js" library={library} setLibrary={setLibrary} />
+                <RenameButton variant="js" isShown={rename} setIsShown={setRename} />
             </Options>
             <Rename
                 variant="js"
@@ -110,7 +110,7 @@ ${queryName}.run({
                 setQueryName={setQueryName}
                 variableValues={variableValues}
                 setVariableValues={setVariableValues}
-            ></Rename>
+            />
             <Editor
                 aria-label="JS Editor"
                 variant="js"

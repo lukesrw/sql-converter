@@ -65,8 +65,8 @@ ${queryName}->execute(array(
     return (
         <>
             <Options>
-                <QuoteStyle variant="php" quote={quote} setQuote={setQuote}></QuoteStyle>
-                <RenameButton variant="php" isShown={rename} setIsShown={setRename}></RenameButton>
+                <QuoteStyle variant="php" quote={quote} setQuote={setQuote} />
+                <RenameButton variant="php" isShown={rename} setIsShown={setRename} />
             </Options>
             <Rename
                 variant="php"
@@ -77,7 +77,7 @@ ${queryName}->execute(array(
                 setQueryName={setQueryName}
                 variableValues={variableValues}
                 setVariableValues={setVariableValues}
-            ></Rename>
+            />
             <Editor
                 variant="php"
                 aria-label="PHP Editor"
@@ -125,7 +125,7 @@ ${queryName}->execute(array(
                 setValue={setPHP}
                 textarea={textarea}
                 value={php}
-            ></Editor>
+            />
         </>
     );
 }

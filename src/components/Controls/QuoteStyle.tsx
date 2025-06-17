@@ -22,7 +22,7 @@ export function QuoteStyle(props: Readonly<QuoteStyle.Props>) {
                     "'": "Single Quote (')",
                     '"': 'Double Quote (")'
                 }}
-            ></Select>
+            />
         </Label>
     );
 }
