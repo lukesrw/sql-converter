@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
+import { useQueryContext, Variables } from "../../hooks/useQueryContext";
 import { Button } from "../Button";
 import { TextInput } from "../Inputs/TextInput";
 import { BUTTON_VARIANTS, INPUT_VARIANTS } from "../Inputs/Variants";
 import { Label } from "../Label";
 import { Options } from "../Options";
-import { useQueryContext, Variables } from "../QueryContext";
 
 export namespace Rename {
     export type Props = {
@@ -53,7 +53,7 @@ export function Rename(props: Readonly<Rename.Props>) {
             <Options>
                 {Object.keys(variables).map((variable) => {
                     return (
-                        <Label label={variable}>
+                        <Label label={variable} key={variable}>
                             <TextInput
                                 variant={props.variant}
                                 placeholder={variables[variable]}

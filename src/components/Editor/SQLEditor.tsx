@@ -1,14 +1,14 @@
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { format } from "sql-formatter";
 import { twMerge } from "tailwind-merge";
+import { useQueryContext, Variables } from "../../hooks/useQueryContext";
 import { Button } from "../Button";
 import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
 import { Label } from "../Label";
-import { Options } from "../Options";
-import { useQueryContext, Variables } from "../QueryContext";
 import { escapeWrap, unescape } from "../lib/escape";
+import { Options } from "../Options";
 
 export function SQLEditor() {
     const { query, setQuery, variables, setVariables } = useQueryContext();

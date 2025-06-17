@@ -4,7 +4,7 @@ import { Column } from "@/components/Column";
 import { JSEditor } from "@/components/Editor/JSEditor";
 import { PHPEditor } from "@/components/Editor/PHPEditor";
 import { SQLEditor } from "@/components/Editor/SQLEditor";
-import { QueryContext, Variables } from "@/components/QueryContext";
+import { QueryContext, Variables } from "@/hooks/useQueryContext";
 import { useEffect, useState } from "react";
 
 const QUERY_KEY = "SQLConverter_Query";

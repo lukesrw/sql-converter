@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { useQueryContext, Variables } from "../../hooks/useQueryContext";
 import { NPMLibrary } from "../Controls/NPMLibrary";
 import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
-import { Options } from "../Options";
-import { useQueryContext, Variables } from "../QueryContext";
 import { escapeWrap, unescape } from "../lib/escape";
+import { Options } from "../Options";
 
 export function JSEditor() {
     const { query, setQuery, variables, setVariables } = useQueryContext();
