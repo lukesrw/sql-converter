@@ -1,10 +1,10 @@
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Button } from "../Button";
 import { TextInput } from "../Inputs/TextInput";
 import { BUTTON_VARIANTS, INPUT_VARIANTS } from "../Inputs/Variants";
 import { Label } from "../Label";
 import { Options } from "../Options";
-import { QueryContext, Variables } from "../QueryContext";
+import { useQueryContext, Variables } from "../QueryContext";
 
 export namespace Rename {
     export type Props = {
@@ -23,7 +23,7 @@ export namespace Rename {
 }
 
 export function Rename(props: Readonly<Rename.Props>) {
-    const { variables } = useContext(QueryContext);
+    const { variables } = useQueryContext();
 
     if (!props.isShown) return null;
 

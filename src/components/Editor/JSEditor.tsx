@@ -1,14 +1,14 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NPMLibrary } from "../Controls/NPMLibrary";
 import { QuoteStyle } from "../Controls/QuoteStyle";
 import { Rename, RenameButton } from "../Controls/Rename";
 import { Editor } from "../Inputs/Editor";
 import { Options } from "../Options";
-import { QueryContext, Variables } from "../QueryContext";
+import { useQueryContext, Variables } from "../QueryContext";
 import { escapeWrap, unescape } from "../lib/escape";
 
 export function JSEditor() {
-    const { query, setQuery, variables, setVariables } = useContext(QueryContext);
+    const { query, setQuery, variables, setVariables } = useQueryContext();
 
     const [js, setJS] = useState("");
     const [quote, setQuote] = useState('"');
