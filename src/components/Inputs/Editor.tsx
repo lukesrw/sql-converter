@@ -3,15 +3,17 @@ import { twMerge } from "tailwind-merge";
 import { Label } from "../Label";
 import { INPUT_VARIANTS } from "./Variants";
 
-export interface EditorProps extends Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label" | "className"> {
-    variant?: keyof typeof INPUT_VARIANTS;
-    textarea: RefObject<HTMLTextAreaElement>;
-    value: string;
-    setValue: Dispatch<SetStateAction<string>>;
-    onInput: (value: string) => void;
+export namespace Editor {
+    export type Props = Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, "aria-label" | "className"> & {
+        variant?: keyof typeof INPUT_VARIANTS;
+        textarea: RefObject<HTMLTextAreaElement>;
+        value: string;
+        setValue: Dispatch<SetStateAction<string>>;
+        onInput: (value: string) => void;
+    };
 }
 
-export function Editor(props: EditorProps) {
+export function Editor(props: Readonly<Editor.Props>) {
     const [insertTab, setInsertTab] = useState<[number, number] | false>(false);
     const [removeTab, setRemoveTab] = useState<[number, string] | false>(false);
 

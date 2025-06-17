@@ -1,7 +1,5 @@
 import { twMerge } from "tailwind-merge";
 
-// const base = "";
-
 const inputBase = "bg-white/10 p-3 block mt-1 rounded-xl font-normal border-2 border-white/20 w-full outline-none";
 
 const buttonBase =

@@ -6,21 +6,23 @@ import { Label } from "../Label";
 import { Options } from "../Options";
 import { QueryContext, Variables } from "../QueryContext";
 
-export interface RenameProps {
-    variant?: keyof typeof INPUT_VARIANTS;
-    isShown: boolean;
+export namespace Rename {
+    export type Props = {
+        variant?: keyof typeof INPUT_VARIANTS;
+        isShown: boolean;
 
-    databaseName?: string;
-    setDatabaseName?: Dispatch<SetStateAction<string>>;
+        databaseName?: string;
+        setDatabaseName?: Dispatch<SetStateAction<NonNullable<Props["databaseName"]>>>;
 
-    queryName?: string;
-    setQueryName?: Dispatch<SetStateAction<string>>;
+        queryName?: string;
+        setQueryName?: Dispatch<SetStateAction<NonNullable<Props["queryName"]>>>;
 
-    variableValues: Variables;
-    setVariableValues: Dispatch<SetStateAction<Variables>>;
+        variableValues: Variables;
+        setVariableValues: Dispatch<SetStateAction<Props["variableValues"]>>;
+    };
 }
 
-export function Rename(props: RenameProps) {
+export function Rename(props: Readonly<Rename.Props>) {
     const { variables } = useContext(QueryContext);
 
     if (!props.isShown) return null;

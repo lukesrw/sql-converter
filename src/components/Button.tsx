@@ -1,13 +1,15 @@
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 import { BUTTON_VARIANTS } from "./Inputs/Variants";
 
-export interface ButtonProps
-    extends PropsWithChildren,
-        Pick<ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "style"> {
-    variant?: keyof typeof BUTTON_VARIANTS;
+export namespace Button {
+    export type Props = PropsWithChildren<
+        Pick<ButtonHTMLAttributes<HTMLButtonElement>, "onClick" | "style"> & {
+            variant?: keyof typeof BUTTON_VARIANTS;
+        }
+    >;
 }
 
-export function Button(props: ButtonProps) {
+export function Button(props: Readonly<Button.Props>) {
     return (
         <button
             className={BUTTON_VARIANTS[props.variant || "base"]}
