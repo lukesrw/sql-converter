@@ -30,9 +30,8 @@ export function Editor(props: Readonly<Editor.Props>) {
             setInsertTab(false);
         } else if (removeTab) {
             if (props.textarea.current) {
-                let start = removeTab[0] - removeTab[1].length;
-
-                props.textarea.current.selectionStart = props.textarea.current.selectionEnd = start;
+                props.textarea.current.selectionStart = props.textarea.current.selectionEnd =
+                    removeTab[0] - removeTab[1].length;
             }
 
             setRemoveTab(false);
@@ -122,10 +121,10 @@ export function Editor(props: Readonly<Editor.Props>) {
                     event.preventDefault();
                     event.stopPropagation();
 
-                    let { selectionStart, selectionEnd } = event.currentTarget;
+                    const { selectionStart, selectionEnd } = event.currentTarget;
 
                     if (event.shiftKey) {
-                        let match = props.value.substring(selectionStart - 4, selectionStart).match(/(\t| {0,4})$/);
+                        const match = props.value.substring(selectionStart - 4, selectionStart).match(/(\t| {0,4})$/);
 
                         setRemoveTab([selectionStart, match ? match[0] : ""]);
                     } else {

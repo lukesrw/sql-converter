@@ -25,8 +25,6 @@ export function PHPEditor() {
     useEffect(() => {
         if (document.activeElement === textarea.current) return;
 
-        let names = Object.keys(variables);
-
         let value = query
             .trim()
             .split("\n")
@@ -34,6 +32,8 @@ export function PHPEditor() {
                 return (index ? "\t" : "") + line;
             })
             .join("\n");
+
+        const names = Object.keys(variables);
         names.forEach((name) => {
             value = value.replace(new RegExp(`@${name}`, "g"), `:${name}`);
         });

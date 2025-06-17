@@ -30,7 +30,7 @@ export function SQLEditor() {
         /**
          * Attempt to extract specific line & column error to highlight for user
          */
-        let match = error.match(/line (?<line>\d+) column (?<column>\d+)/i);
+        const match = error.match(/line (?<line>\d+) column (?<column>\d+)/i);
         if (match && match.groups) {
             let { line, column } = match.groups;
             line = query.split("\n")[Number(line) - 1];
@@ -70,8 +70,8 @@ export function SQLEditor() {
         if (document.activeElement === textarea.current) return;
 
         let value = query;
-        let names = Object.keys(variables);
 
+        const names = Object.keys(variables);
         if (names.length) {
             value = `${names
                 .map((name) => {
@@ -135,7 +135,7 @@ ${value}`;
                 value={sql}
                 setValue={setSQL}
                 onInput={(value) => {
-                    let valueVariables: Variables = {};
+                    const valueVariables: Variables = {};
                     let match: ReturnType<typeof value.match>;
                     do {
                         match = value.match(/set\s*@(?<name>\w+)\s*=\s*('|"|)(?<value>.+?)(?<!\\)\2;/i);

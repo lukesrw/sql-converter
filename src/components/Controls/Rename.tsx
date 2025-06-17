@@ -27,7 +27,7 @@ export function Rename(props: Readonly<Rename.Props>) {
 
     if (!props.isShown) return null;
 
-    let hasDatabaseOrQuery = typeof props.databaseName === "string" || typeof props.queryName === "string";
+    const hasDatabaseOrQuery = typeof props.databaseName === "string" || typeof props.queryName === "string";
 
     return (
         <>

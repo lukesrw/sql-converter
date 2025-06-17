@@ -27,8 +27,6 @@ export function JSEditor() {
     useEffect(() => {
         if (document.activeElement === textarea.current) return;
 
-        let names = Object.keys(variables);
-
         let value = query
             .trim()
             .split("\n")
@@ -37,12 +35,10 @@ export function JSEditor() {
             })
             .join("\n");
 
-        let valueQuote = quote;
-        if (value.includes("\n")) {
-            valueQuote = "`";
-        }
+        const valueQuote = value.includes("\n") ? "`" : quote;
 
-        let jsVariables = names
+        const names = Object.keys(variables);
+        const jsVariables = names
             .map((name) => {
                 let objectName = name;
                 if (!objectName.match(/^[a-zA-Z_$]\w*$/)) {
@@ -120,7 +116,7 @@ ${queryName}.run({
                     let match = value.match(/(?:query|prepare)\(\s*("|'|`)(?<query>.+?)(?<!\\)\1/is);
                     let query = "";
                     let queryQuote = "";
-                    let variables: Variables = {};
+                    const variables: Variables = {};
                     if (match) {
                         query = match?.groups?.query || "";
                         queryQuote = match[1];
