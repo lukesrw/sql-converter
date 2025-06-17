@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-const inputBase = "bg-white/10 p-3 block mt-1 rounded-xl font-normal border-2 border-white/20 w-full outline-none";
+const inputBase = "bg-white/10 p-3 block mt-2 rounded-xl font-normal border-2 border-white/20 w-full outline-none";
 
 const buttonBase =
     "flex justify-center items-center hover:bg-white/20 disabled:hover:bg-white/10 active:bg-white/40 hover:border-white/40 active:border-white/80 disabled:hover:border-white/20 disabled:opacity-50 font-bold";
