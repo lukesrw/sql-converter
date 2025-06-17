@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
-const font = Poppins({ subsets: ["latin"], weight: "400" });
+const font = Poppins({ subsets: ["latin"], weight: "400", preload: true, display: "swap" });
 
 export const metadata: Metadata = {
     title: "SQL Converter",
