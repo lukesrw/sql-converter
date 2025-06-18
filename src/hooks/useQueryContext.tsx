@@ -60,7 +60,7 @@ WHERE
             return;
         }
 
-        setQuery(query.replace(/(\s*)(.+) BETWEEN (.+) AND (.+)/gi, "$1($2 >= $3 AND $2 <= $4)"));
+        setQuery(query.replace(/(\s*)([\w.]+) BETWEEN (.+) AND (.+)/gi, "$1($2 >= $3 AND $2 <= $4)"));
     }, [query]);
 
     /**
